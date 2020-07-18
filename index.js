@@ -28,18 +28,20 @@ io.on('connection', (socket) => {
         console.log(storeName)
         console.log(user.username + ' has joined'); //msg to be rendered in template
     })
+
+    var valuePerItr = []
+    var i = 0, j = 0;
     if (storeId.length == 4) { // when all the users will join
-        for (var i = 0; i < 4; i++) {
-            var valuePerItr = []
-            for (var j = 0; j < 4; j++) {
-                io.to(storeId[j]).emit('turn')
-                socket.broadcast.emit('waiting',storeName[j])
+        if (j < 4) {
+            io.to(storeId[j]).emit('turn')
+            socket.broadcast.emit('waiting', storeName[j])
+            socket.on('played', () => {
                 valuePerItr[j] = Math.floor(Math.random() * 3) + 7;
-            }
-            console.log(valuePerItr)
+            })
+            j += 1
         }
     }
-    else{
+    else {
         socket.emit('untilEveryoneJoin')
     }
 

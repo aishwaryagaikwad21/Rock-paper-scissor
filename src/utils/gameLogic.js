@@ -1,8 +1,10 @@
 var score = new Array(5).fill(0).map(() => new Array(4).fill(0));
+var funCount = 0
 //a = stone = 7, b = scissor = 8, c = paper = 9
 //console.log(score)
 const rsp = function (p1, p2, p3, p4) {
-   
+    funCount += 1
+    if (funCount <= 3) { // 3 turns only
         const v = [p1, p2, p3, p4]
         //console.log(v)
         for (var i = 0; i < 4; i++) {
@@ -26,8 +28,10 @@ const rsp = function (p1, p2, p3, p4) {
             }
         }
         console.log(score)
-    
-    
+    }
+    else{
+        console.log('Game Over')
+    }
     
 }
 //a=7,b=8,c=9
