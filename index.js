@@ -3,6 +3,7 @@ const express = require('express');
 const http = require('http')
 const socketio = require('socket.io')
 const addUser = require('./src/utils/user')
+const rsp = require('./src/utils/gameLogic')
 
 
 const app = express()
@@ -15,6 +16,8 @@ const publicDirectoryPath = path.join(__dirname, './public')
 app.use(express.static(publicDirectoryPath))
 var storeId = []
 var storeName = []
+var valuePerItr = []
+var i = 0, j = 0;
 io.on('connection', (socket) => {
     socket.on('join', ({ username, room }, callback) => { //request from client
         const { error, user } = addUser({ id: socket.id, username, room })
@@ -24,26 +27,39 @@ io.on('connection', (socket) => {
         }
         storeId.push(user.id)
         storeName.push(user.username)
-        console.log(storeId)
-        console.log(storeName)
         console.log(user.username + ' has joined'); //msg to be rendered in template
+        console.log(storeId.length)
+        console.log(storeId)
+
+
+        if (storeId.length == 4) { // when all the users will join
+            game(j)
+            function game(j) {
+                if (j < 4) {
+                    console.log(storeId[0])
+                    socket.to(storeId[0]).emit('turn', (storeId[0]))
+                    socket.broadcast.emit('waiting', storeName[j])
+                    socket.on('played', () => {
+                        valuePerItr[j] = Math.floor(Math.random() * 3) + 7;
+                        console.log(valuePerItr)
+                        j+=1
+                    })
+                }
+                else{
+                    rsp(valuePerItr)
+                    j=0
+                    game(j)
+                }
+
+            }
+        }
+        else {
+            socket.emit('untilEveryoneJoin')
+        }
     })
 
-    var valuePerItr = []
-    var i = 0, j = 0;
-    if (storeId.length == 4) { // when all the users will join
-        if (j < 4) {
-            io.to(storeId[j]).emit('turn')
-            socket.broadcast.emit('waiting', storeName[j])
-            socket.on('played', () => {
-                valuePerItr[j] = Math.floor(Math.random() * 3) + 7;
-            })
-            j += 1
-        }
-    }
-    else {
-        socket.emit('untilEveryoneJoin')
-    }
+
+
 
 
 })

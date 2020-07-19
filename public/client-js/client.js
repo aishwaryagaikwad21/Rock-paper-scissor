@@ -6,24 +6,29 @@ const socket = io()
 
 const {username,room}=Qs.parse(location.search,{ignoreQueryPrefix:true}) //ignoreQueryPrefix to remove ?
 //console.log(username,room)
-
-
+// document.querySelector('#play').addEventListener('click',()=>{
+//     console.log('you played')
+// })
+const $playButton = document.querySelector('#play')
 socket.on('untilEveryoneJoin',()=>{
- document.getElementById("play").disabled = true
+ $playButton.setAttribute('disabled','disabled')
  console.log('Let players Join')
 })
 
-socket.on('turn',()=>{
-    console.log('Your turn')
-    document.getElementById("play").disabled = false
-    document.querySelector('#play').addEventListener('click',()=>{
-        console.log('You played')
+
+
+socket.on('turn',(id)=>{
+    console.log('Your turn',id)
+    $playButton.removeAttribute('disabled')
+    $playButton.addEventListener('click',()=>{
         socket.emit('played')
+        console.log('You played')
+        
     })
 })
 
 socket.on('waiting',(name)=>{
-    document.getElementById("play").disabled = true
+    $playButton.setAttribute('disabled','disabled')
     console.log(name + ' is playing. Wait for your turn')
 })
 
