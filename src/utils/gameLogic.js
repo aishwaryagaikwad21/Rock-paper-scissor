@@ -29,10 +29,10 @@ const rsp = function (v) {
         }
         console.log('Scoreboard for round '+ round + ' is ')
         console.log(score)
-        return {score,round}
+        return {score}
     }
     else{
-        console.log('Game over')
+        //console.log('Game over')
         console.log(score)
         const final = score
         
@@ -45,11 +45,11 @@ module.exports = rsp
 //a=7,b=8,c=9
 //rsp('a','b','a','c');
 //rsp('b','c','a','b');
- rsp([7, 7, 9, 8]);
- rsp([9, 8, 8, ]);
- rsp([9, 8, 8, 7]);
- rsp([9, 8, 8, 7]);
+//  rsp([7, 7, 9, 8]);
+//  rsp([9, 8, 8, ]);
+//  rsp([9, 8, 8, 7]);
+//  rsp([9, 8, 8, 7]);
 
- rsp([9, 8, 8, 7]);
- rsp([9, 8, 8, 7]);
+//  rsp([9, 8, 8, 7]);
+//  rsp([9, 8, 8, 7]);
 

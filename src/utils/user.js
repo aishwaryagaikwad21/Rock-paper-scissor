@@ -13,7 +13,13 @@ const addUser = ({id,username,room}) =>{
         const user = {id,username,room}
         users.push(user)
         count+=1
+        //console.log(users[0].room)
         return {user}
     }
 }
-module.exports = addUser
+
+const getRoom = ()=>{
+    const room = users[0].room
+    return {room}
+}
+module.exports = {addUser,getRoom}

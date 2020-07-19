@@ -15,21 +15,30 @@ socket.on('untilEveryoneJoin',()=>{
  console.log('Let players Join')
 })
 
+socket.on('initial',()=>{
+    $playButton.setAttribute('disabled','disabled')
+    console.log('Game about to start')
+})
+
+socket.on('canStart',()=>{
+    console.log('Game can be started')
+    socket.emit('play') //client acknowledgement
+})
 
 
-socket.on('turn',(id)=>{
-    console.log('Your turn',id)
+socket.on('turn',(name)=>{
+    console.log(name  + ' turn ')
     $playButton.removeAttribute('disabled')
     $playButton.addEventListener('click',()=>{
         socket.emit('played')
         console.log('You played')
-        
+        $playButton.setAttribute('disabled','disabled')
     })
 })
 
-socket.on('waiting',(name)=>{
+socket.on('waiting',()=>{
     $playButton.setAttribute('disabled','disabled')
-    console.log(name + ' is playing. Wait for your turn')
+    console.log( 'Wait for your turn')
 })
 
 socket.emit('join',{username,room},(error)=>{
