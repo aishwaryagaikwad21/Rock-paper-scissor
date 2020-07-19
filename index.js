@@ -43,12 +43,22 @@ io.on('connection', (socket) => {
                         valuePerItr[j] = Math.floor(Math.random() * 3) + 7;
                         console.log(valuePerItr)
                         j+=1
+                        game(j)
                     })
                 }
                 else{
-                    rsp(valuePerItr)
-                    j=0
-                    game(j)
+                    const {score,round,final} = rsp(valuePerItr)
+                    if(final){
+                        console.log('Game is over and scoreboard is ')
+                        console.log(final)
+                    }
+                    else{
+                        console.log('Score of round' +round+ ' is ')
+                        console.log(score)
+                        j = 0
+                        game(j)
+                    }
+                    
                 }
 
             }

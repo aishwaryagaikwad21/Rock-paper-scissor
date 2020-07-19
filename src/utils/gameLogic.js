@@ -29,12 +29,14 @@ const rsp = function (v) {
         }
         console.log('Scoreboard for round '+ round + ' is ')
         console.log(score)
+        return {score,round}
     }
     else{
         console.log('Game over')
         console.log(score)
+        const final = score
         
-        return{score}
+        return{final}
     }
     
 }
