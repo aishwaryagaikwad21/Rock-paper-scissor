@@ -1,18 +1,19 @@
 const socket = io()
-
-//const $messages = document.querySelector('#messages')
-
-//const messageTemplate = document.querySelector('#message-template').innerHTML
-
 const {username,room}=Qs.parse(location.search,{ignoreQueryPrefix:true}) //ignoreQueryPrefix to remove ?
-//console.log(username,room)
-// document.querySelector('#play').addEventListener('click',()=>{
-//     console.log('you played')
-// })
+
 const $playButton = document.querySelector('#play')
+
 socket.on('untilEveryoneJoin',()=>{
  $playButton.setAttribute('disabled','disabled')
  console.log('Let players Join')
+})
+
+socket.on('newUser',()=>{
+    console.log('A new user has joined')
+})
+
+socket.on('allHaveJoined',()=>{
+    console.log('All have joined')
 })
 
 socket.on('initial',()=>{
@@ -25,6 +26,12 @@ socket.on('canStart',()=>{
     socket.emit('play') //client acknowledgement
 })
 
+socket.on('nextRound',()=>{
+    //$playButton.setAttribute('disabled','disabled')
+    console.log('Next Round')
+    socket.emit('play')
+})
+
 
 socket.on('turn',(name)=>{
     console.log(name  + ' turn ')
@@ -32,13 +39,13 @@ socket.on('turn',(name)=>{
     $playButton.addEventListener('click',()=>{
         socket.emit('played')
         console.log('You played')
-        $playButton.setAttribute('disabled','disabled')
+        //$playButton.setAttribute('disabled','disabled')
     })
 })
 
-socket.on('waiting',()=>{
+socket.on('waiting',(name)=>{
     $playButton.setAttribute('disabled','disabled')
-    console.log( 'Wait for your turn')
+    console.log( name + ' is playing. Wait for your turn')
 })
 
 socket.emit('join',{username,room},(error)=>{
@@ -46,5 +53,9 @@ socket.emit('join',{username,room},(error)=>{
         alert(error)
         location.href='/'
     }
+})
+
+socket.on('gameOver',()=>{
+    window.location = "score.html"
 })
 

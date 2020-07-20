@@ -20,6 +20,6 @@ const addUser = ({id,username,room}) =>{
 
 const getRoom = ()=>{
     const room = users[0].room
-    return {room}
+    return room
 }
 module.exports = {addUser,getRoom}

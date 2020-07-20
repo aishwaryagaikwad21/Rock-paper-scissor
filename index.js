@@ -17,7 +17,7 @@ app.use(express.static(publicDirectoryPath))
 var storeId = []
 var storeName = []
 var valuePerItr = []
-let j = 0;
+var k = 0;
 io.on('connection', (socket) => {
     socket.on('join', ({ username, room }, callback) => { //request from client
         const { error, user } = addUser({ id: socket.id, username, room })
@@ -28,15 +28,13 @@ io.on('connection', (socket) => {
         storeId.push(user.id)
         storeName.push(user.username)
         console.log(user.username + ' has joined'); //msg to be rendered in template
-        console.log(storeId.length)
-        console.log(storeId)
+        // console.log(storeId.length)
+        // console.log(storeId)
         socket.emit('initial') //restricting initially
+        socket.broadcast.emit('newUser')
         if (storeId.length == 4) {
-            console.log(storeName[0])
-            console.log(storeName[1])
-            console.log(storeName[2])
-            console.log(storeName[3])
             socket.emit('canStart')
+            socket.broadcast.emit('allHaveJoined')
         }
         else {
             socket.emit('untilEveryoneJoin')
@@ -46,58 +44,47 @@ io.on('connection', (socket) => {
 
 
     socket.on('play', () => {
-        io.to(getRoom).emit('waiting')
-        socket.to(storeId[j]).emit('turn', storeName[j])
+        socket.broadcast.emit('waiting', storeName[j])
+        socket.to(storeId[k]).emit('turn', storeName[j])
     })
     socket.on('played', () => {
-        console.log(storeName[j] + ' played ')
-        console.log(j)
+        console.log(storeName[k] + ' played ')
+        console.log(k)
 
-        if (j < 4) {
-            console.log(j)
-            valuePerItr[j] = Math.floor(Math.random() * 3) + 7;
+        if (k < 4) {
+            console.log(k)
+
+            valuePerItr[k] = Math.floor(Math.random() * 3) + 7; //randomly generate 7,8,9 i.e stone
             console.log(valuePerItr)
-            j++
-            console.log(j)
-            if (j > 3) {
-                console.log(valuePerItr)
-                console.log(j)
-                const { score, final } = rsp(valuePerItr)
+            k++
+            console.log(k)
+            if (k == 4) {
+                console.log(k)
+                var { score, final } = rsp(valuePerItr)
                 if (final) {
                     console.log('Game is over and scoreboard is ')
                     console.log(final)
+                    //io.emit('gameOver')
                 }
                 else {
-                    
+
                     console.log(score)
-                    j = 0
+                    console.log('Next round')
+                    console.log(k)
+                    k = 0
+                    console.log(k)
                     valuePerItr = []
-                    io.to(getRoom).emit('waiting')
-                    socket.to(storeId[j]).emit('turn')
+                    console.log(valuePerItr)
+                    socket.to(storeId[k]).emit('nextRound')
+                    // io.to(getRoom).emit('waiting')
+                    // socket.to(storeId[j]).emit('turn',storeName[j])
                 }
             }
-            
-            io.to(getRoom).emit('waiting')
-            socket.to(storeId[j]).emit('turn')
 
+            io.emit('waiting', storeName[k])
+            socket.to(storeId[k]).emit('turn', storeName[j])
         }
-
-
-
-
-
-
     })
-
-    /*function eventHandle(j) {
-        console.log(j)
-        io.emit('waiting', storeName[j])
-        socket.to(storeId[j]).emit('turn')
-    }*/
-
-
-
-
 
 })
 
