@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 
                 //printing score of each player vs player
                 for(var i=0; i<4; i++){
-                    for(var j=0; j<4; j++){
+                    for(var j=i; j<4; j++){
                         if(i!=j){
                             console.log('Score of '+storeName[i]+ ' vs ' +storeName[j]+ ' is ',arr.score[i][j])
                         }
