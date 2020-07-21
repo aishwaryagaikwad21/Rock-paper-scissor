@@ -26,6 +26,6 @@ git clone https://github.com/aishwaryagaikwad21/Rock-paper-scissor
  - Since no input mechanism is mentioned, not much of work is done on frontend. Hence keep check on server terminal and client terminal 
     for events taking place in the game room.
     
- - There are 50 rounds in the game. Values for stone, scissor and paper are considered as 7,8,9 for computing. Values are generated randomly.
+ - There are 50 rounds in the game. Values for stone, scissor and paper are considered as 7,8,9 respectively for computing. Values are generated randomly.
  
  - Score of each round is displayed in javascript console. Final score and score per player to player basis is also printed in console.
