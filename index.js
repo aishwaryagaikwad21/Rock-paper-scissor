@@ -69,7 +69,6 @@ io.on('connection', (socket) => {
                 return
             }
             else {
-                console.log('New round ' + arr.round)
                 console.log('Score board for round ' + arr.round + ' is ')
                 console.table(arr.score)
                 j = 0

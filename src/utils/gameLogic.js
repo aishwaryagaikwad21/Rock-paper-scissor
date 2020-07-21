@@ -30,7 +30,6 @@ var rsp = () => {
                 }
             }
         }
-        console.log('Scoreboard for round ' + round + ' is ')
         var arr = {round,score}
         return {arr}
 }
