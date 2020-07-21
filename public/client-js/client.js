@@ -13,7 +13,7 @@ socket.on('newUser',()=>{
 })
 
 socket.on('allHaveJoined',()=>{
-    console.log('All have joined')
+    console.log('All have join')
 })
 
 socket.on('initial',()=>{
@@ -23,29 +23,7 @@ socket.on('initial',()=>{
 
 socket.on('canStart',()=>{
     console.log('Game can be started')
-    socket.emit('play') //client acknowledgement
-})
-
-socket.on('nextRound',()=>{
-    //$playButton.setAttribute('disabled','disabled')
-    console.log('Next Round')
-    socket.emit('play')
-})
-
-
-socket.on('turn',(name)=>{
-    console.log(name  + ' turn ')
-    $playButton.removeAttribute('disabled')
-    $playButton.addEventListener('click',()=>{
-        socket.emit('played')
-        console.log('You played')
-        //$playButton.setAttribute('disabled','disabled')
-    })
-})
-
-socket.on('waiting',(name)=>{
-    $playButton.setAttribute('disabled','disabled')
-    console.log( name + ' is playing. Wait for your turn')
+    socket.emit('play')  //client acknowledgement
 })
 
 socket.emit('join',{username,room},(error)=>{
@@ -58,4 +36,31 @@ socket.emit('join',{username,room},(error)=>{
 socket.on('gameOver',()=>{
     window.location = "score.html"
 })
+
+
+//If user mechanism is considered then  following code will be executed
+
+socket.on('roundOver',()=>{
+    $playButton.setAttribute('disabled','disabled')
+    console.log('Next Round')
+    socket.emit('play')
+})
+
+socket.on('turn',(name)=>{ //when player turn arrives
+    console.log(name  + ' turn ')
+    $playButton.removeAttribute('disabled')
+    $playButton.addEventListener('click',()=>{
+        socket.emit('played')
+        console.log('You played')
+        //$playButton.setAttribute('disabled','disabled')
+    })
+})
+
+socket.on('waiting',(name)=>{ //when player is playing other players will wait 
+    $playButton.setAttribute('disabled','disabled')
+    console.log( name + ' is playing. Wait for your turn')
+})
+
+
+
 
