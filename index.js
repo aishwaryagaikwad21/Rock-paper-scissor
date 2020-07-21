@@ -54,35 +54,27 @@ io.on('connection', (socket) => {
             if (count > 50) {
                 console.log('GAME IS OVER')
                 console.log('Final Score board is')
-                console.log(arr.score)
+                console.table(arr.score)
+
                 //printing score of each player vs player
-                console.log('Score of player 1 vs player 2 is ', arr.score[0][1])
-                console.log('Score of player 1 vs player 3 is ', arr.score[0][2])
-                console.log('Score of player 1 vs player 4 is ', arr.score[0][3])
-
-                console.log('Score of player 2 vs player 1 is ', arr.score[1][0])
-                console.log('Score of player 2 vs player 3 is ', arr.score[1][2])
-                console.log('Score of player 2 vs player 4 is ', arr.score[1][3])
-
-                console.log('Score of player 3 vs player 1 is ', arr.score[2][0])
-                console.log('Score of player 3 vs player 2 is ', arr.score[2][1])
-                console.log('Score of player 3 vs player 4 is ', arr.score[2][3])
-
-                console.log('Score of player 4 vs player 1 is ', arr.score[3][0])
-                console.log('Score of player 4 vs player 2 is ', arr.score[3][1])
-                console.log('Score of player 4 vs player 3 is ', arr.score[3][2])
-
+                for(var i=0; i<4; i++){
+                    for(var j=0; j<4; j++){
+                        if(i!=j){
+                            console.log('Score of '+storeName[i]+ ' vs ' +storeName[j]+ ' is ',arr.score[i][j])
+                        }
+                        
+                    }
+                }
                 io.emit('gameOver')
                 return
             }
             else {
                 console.log('New round ' + arr.round)
                 console.log('Score board for round ' + arr.round + ' is ')
-                console.log(arr.score)
+                console.table(arr.score)
                 j = 0
                 nextItr()
             }
-
         }
     })
 })
@@ -92,7 +84,7 @@ server.listen(port, () => {
 })
 
 //If user mechanism is considered then following socket events will occur
-    
+
 /*socket.on('played', () => {
     console.log(storeName[j] + ' played ')
     console.log(j)
