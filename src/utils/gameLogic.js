@@ -15,13 +15,13 @@ var rsp = () => {
             for (var j = 0; j < 4; j++){
                 var second = v[j]
                 if (i != j) {
-                    if ((first == 7 && second == 8)||(first == 8 && second == 7)) {
+                    if (first == 7 && second == 8) {
                         score[i][j] += 1; //stone vs scissor = stone wins, player[i] wins
                     }
-                    else if ((first == 8 && second == 9)||(first == 9 && second == 8)) {
+                    else if (first == 8 && second == 9) {
                         score[i][j] += 1; //scissor vs paper = scissor wins, player[i] win
                     }
-                    else if ((first == 9 && second == 7)||(first == 7 && second== 9)) {
+                    else if (first == 9 && second == 7) {
                         score[i][j] += 1; //paper vs stone = paper wins, player[i] win
                     }
                     else {
