@@ -1,5 +1,5 @@
 # Rock-paper-scissor
-A four player game using node.js, express.js and socket.io
+A  Multiplayer game using node.js, express.js and socket.io
 ## Clone
 git clone https://github.com/aishwaryagaikwad21/Rock-paper-scissor
 ## Steps to run
