@@ -9,8 +9,7 @@ A  Multiplayer game using node.js, express.js and socket.io
  
  - Only four players can join the game. 
  
- - Since no input mechanism is mentioned, not much of work is done on frontend. Hence keep check on server terminal and client terminal 
-    for events taking place in the game room.
+ - Since no input mechanism is mentioned in requirements, hence keep check on server terminal and client terminal for events taking place in the game room.
     
  - There are 50 rounds in the game. Values for stone, scissor and paper are considered as 7,8,9 respectively for computing. Values are generated randomly.
  
